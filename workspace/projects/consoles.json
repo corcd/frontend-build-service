@@ -1,0 +1,80 @@
+{
+  "tasks": [{
+    "name": "scene",
+    "repository": {
+      "type": "git",
+      "url": "http://wanghanze:whz18267590821@gitlab.aodianyun.com/lcps/Lcps-Scene-Vue3.git",
+      "branch": "origin/test"
+    },
+    "dependencies": ["@gdyfe/uploader"],
+    "program": {
+      "command": ["pnpm install", "pnpm build:huawei"],
+      "options": {
+        "env": {
+          "CI_TASK_RUNNER": "1",
+          "CI_TASK_RUNNER_TASK_NAME": "${taskName}",
+          "CI_TASK_RUNNER_TASK_PATH": "${taskPath}",
+          "CI_TASK_RUNNER_TASK_DIRNAME": "${taskDirname}"
+        },
+        "timeout": 0
+      }
+    },
+    "deploy": {
+      "ignore": false,
+      "directory": "./dist"
+    }
+  }, {
+    "name": "delay",
+    "repository": {
+      "type": "git",
+      "url": "http://wanghanze:whz18267590821@gitlab.aodianyun.com/lcps/Lcps-Delay.git",
+      "branch": "origin/test"
+    },
+    "dependencies": ["@gdyfe/uploader"],
+    "program": {
+      "command": ["yarn install", "yarn build:huawei"],
+      "options": {
+        "env": {
+          "CI_TASK_RUNNER": "1",
+          "CI_TASK_RUNNER_TASK_NAME": "${taskName}",
+          "CI_TASK_RUNNER_TASK_PATH": "${taskPath}",
+          "CI_TASK_RUNNER_TASK_DIRNAME": "${taskDirname}"
+        },
+        "timeout": 0
+      }
+    },
+    "deploy": {
+      "ignore": false,
+      "directory": "./dist"
+    }
+  }, {
+    "name": "monitor",
+    "repository": {
+      "type": "git",
+      "url": "http://wanghanze:whz18267590821@gitlab.aodianyun.com/lcps/Lcps-Monitor.git",
+      "branch": "origin/test"
+    },
+    "dependencies": ["@gdyfe/uploader"],
+    "program": {
+      "command": ["yarn install", "yarn build:huawei"],
+      "options": {
+        "env": {
+          "CI_TASK_RUNNER": "1",
+          "CI_TASK_RUNNER_TASK_NAME": "${taskName}",
+          "CI_TASK_RUNNER_TASK_PATH": "${taskPath}",
+          "CI_TASK_RUNNER_TASK_DIRNAME": "${taskDirname}"
+        },
+        "timeout": 0
+      }
+    },
+    "deploy": {
+      "ignore": false,
+      "directory": "./dist"
+    }
+  }],
+  "dependencies": [],
+  "program": {},
+  "deploy": {
+    "target": "huawei"
+  }
+}

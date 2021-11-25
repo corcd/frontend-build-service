@@ -1,0 +1,11 @@
+{
+  "command": "",
+  "options": {
+    "env": {
+      "CI_TASK_RUNNER": "1",
+      "CI_TASK_RUNNER_TASK_NAME": "${taskName}",
+      "CI_TASK_RUNNER_TASK_PATH": "${taskPath}"
+    },
+    "timeout": 0
+  }
+}
