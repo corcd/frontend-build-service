@@ -2,17 +2,22 @@
  * @Author: Whzcorcd
  * @Date: 2021-11-23 14:07:32
  * @LastEditors: Whzcorcd
- * @LastEditTime: 2021-11-26 10:57:16
+ * @LastEditTime: 2021-11-26 13:55:41
  * @Description: file content
  */
 'use strict'
 
-const { resolve } = require('path')
 const fs = require('fs/promises')
 const { serial } = require('./queue')
 const create = require('./create')
 const loger = require('./loger')
 const error = require('./error')
+const {
+  targetProductPath,
+  regionProductPath,
+  appProductPath,
+  nginxProductPath,
+} = require('./target')
 const { runInit } = require('./git')
 const { runTasks } = require('./task')
 const { runExtract } = require('./extract')
@@ -20,7 +25,7 @@ const { createNginxFile, runNginx } = require('./nginx')
 
 const PACKAGE = require('../../package.json')
 
-const execute = (options = {}, context = process.cwd()) => {
+const execute = (options = {}) => {
   const time = Date.now()
 
   loger.log('░░', `${PACKAGE.name}:`, `v${PACKAGE.version}`)
@@ -28,15 +33,21 @@ const execute = (options = {}, context = process.cwd()) => {
   return serial([
     async () => {
       loger.log('Create')
-      const path = resolve(
-        context,
-        `./workspace/products/${options.deploy.target}/nginx.conf`
-      )
-      await fs.writeFile(path, '')
-      await createNginxFile(path, options)
+      const deploy = options.deploy
+      try {
+        await fs.access(targetProductPath(deploy.target))
+      } catch (e) {
+        await fs.mkdir(targetProductPath(deploy.target))
+        await fs.mkdir(regionProductPath(deploy.target, deploy.region))
+        await fs.mkdir(appProductPath(deploy.target, deploy.region))
+      }
+
+      const nginxPath = nginxProductPath(deploy.target, deploy.region)
+      await fs.writeFile(nginxPath, '')
+      await createNginxFile(nginxPath, options)
 
       // 将外部输入的配置转换成内部任务描述队列
-      return create(options, context)
+      return create(options)
     },
 
     // 仓库同步器
@@ -67,7 +78,7 @@ const execute = (options = {}, context = process.cwd()) => {
     },
   ]).then(results => {
     const timeEnd = Math.round((Date.now() - time) / 1000)
-    error.analyse()
+    error.analyse(options)
     loger.log('░░', `${PACKAGE.name}:`, `${timeEnd}s`)
     error.clear()
     return results[results.length - 1]

@@ -2,7 +2,7 @@
  * @Author: Whzcorcd
  * @Date: 2021-11-26 10:27:25
  * @LastEditors: Whzcorcd
- * @LastEditTime: 2021-11-26 10:36:33
+ * @LastEditTime: 2021-11-26 13:35:59
  * @Description: file content
  */
 'use strict'
@@ -18,13 +18,16 @@ const productPath = resolve(rootPath, './products')
 
 const targetProjectPath = project => resolve(projectPath, `./${project}.json`)
 
-const targetContainerPath = target => resolve(containerPath, `./${target}`)
+const targetContainerPath = name => resolve(containerPath, `./${name}`)
 
 const targetProductPath = target => resolve(productPath, `./${target}`)
 const regionProductPath = (target, region) =>
   resolve(targetProductPath(target), `./${region}`)
+
 const appProductPath = (target, region) =>
-  resolve(targetProductPath(target, region), './app')
+  resolve(regionProductPath(target, region), './app')
+const nginxProductPath = (target, region) =>
+  resolve(regionProductPath(target, region), './nginx.conf')
 
 module.exports = {
   CONTEXT,
@@ -41,5 +44,7 @@ module.exports = {
 
   targetProductPath,
   regionProductPath,
+
   appProductPath,
+  nginxProductPath,
 }

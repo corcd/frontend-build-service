@@ -2,18 +2,18 @@
  * @Author: Whzcorcd
  * @Date: 2021-11-22 17:25:30
  * @LastEditors: Whzcorcd
- * @LastEditTime: 2021-11-25 16:51:48
+ * @LastEditTime: 2021-11-26 13:48:30
  * @Description: file content
  */
 'use strict'
 
-const path = require('path')
 const defaultsDeep = require('lodash/defaultsDeep')
 const { Task } = require('./task')
+const { targetContainerPath } = require('./target')
 const template = require('./template')
 const DEFAULT = require('../config/program.default.json')
 
-const create = (options, context = process.cwd()) => {
+const create = options => {
   const tasks = []
 
   // 解析仓库属性
@@ -49,8 +49,14 @@ const create = (options, context = process.cwd()) => {
     if (typeof deploy === 'string') {
       deploy = {
         target: deploy,
-        ignore: false,
+        host: '',
+        region: 'consoles',
+        ports: {
+          http: 80,
+          https: 443,
+        },
         directory: './dist',
+        ignore: false,
       }
     }
     return deploy
@@ -85,7 +91,7 @@ const create = (options, context = process.cwd()) => {
     }
     task = {
       name: task.name,
-      path: path.resolve(context, `./workspace/containers/${task.name}`),
+      path: targetContainerPath(task.name),
       repository: task.repository,
       dependencies: [].concat(
         task.dependencies || [],

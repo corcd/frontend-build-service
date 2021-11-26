@@ -2,7 +2,7 @@
  * @Author: Whzcorcd
  * @Date: 2021-11-25 13:38:46
  * @LastEditors: Whzcorcd
- * @LastEditTime: 2021-11-26 10:14:07
+ * @LastEditTime: 2021-11-26 13:46:46
  * @Description: file content
  */
 'use strict'
@@ -12,6 +12,7 @@ const fs = require('fs/promises')
 const rimraf = require('rimraf')
 const queue = require('./queue')
 const loger = require('./loger')
+const { targetContainerPath, appProductPath } = require('./target')
 
 const remove = path => {
   return new Promise((resolve, reject) => {
@@ -25,22 +26,16 @@ const remove = path => {
 }
 
 const extract = async task => {
-  const context = process.cwd()
   const deploy = task.deploy
-  const rootPath = path.resolve(context, './workspace')
 
   // ssr 项目不参与主包部署
   if (deploy.ignore) return
 
-  const targetPath = path.resolve(rootPath, `./products/${deploy.target}`)
-  const appPath = path.resolve(targetPath, `./app/${task.name}`)
+  const appPath = path.resolve(
+    appProductPath(deploy.target, deploy.region),
+    `./${task.name}`
+  )
 
-  try {
-    await fs.access(targetPath)
-  } catch (e) {
-    await fs.mkdir(targetPath)
-    await fs.mkdir(path.resolve(targetPath, './app'))
-  }
   try {
     await fs.access(appPath)
     await remove(appPath).catch(err => {
@@ -51,7 +46,7 @@ const extract = async task => {
   }
   try {
     await fs.rename(
-      path.resolve(rootPath, `./containers/${task.name}/${deploy.directory}`),
+      path.resolve(targetContainerPath(task.name), deploy.directory),
       appPath
     )
   } catch (err) {

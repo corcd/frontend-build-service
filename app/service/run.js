@@ -2,7 +2,7 @@
  * @Author: Whzcorcd
  * @Date: 2021-11-23 13:54:21
  * @LastEditors: Whzcorcd
- * @LastEditTime: 2021-11-26 10:56:00
+ * @LastEditTime: 2021-11-26 11:52:13
  * @Description: file content
  */
 'use strict'
@@ -34,7 +34,7 @@ class RunService extends Service {
       return options
     }
 
-    execute(config(project), target.CONTEXT).catch(errors =>
+    execute(config(project)).catch(errors =>
       process.nextTick(() => {
         loger.error(errors)
         process.exit(1)

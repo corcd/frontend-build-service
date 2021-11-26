@@ -2,15 +2,15 @@
  * @Author: Whzcorcd
  * @Date: 2021-11-25 14:06:54
  * @LastEditors: Whzcorcd
- * @LastEditTime: 2021-11-26 10:14:45
+ * @LastEditTime: 2021-11-26 12:57:22
  * @Description: file content
  */
 'use strict'
 
-const path = require('path')
 const NginxConfFile = require('nginx-conf').NginxConfFile
 const queue = require('./queue')
 const loger = require('./loger')
+const target = require('./target')
 
 const createNginxFile = (targetPath, options) => {
   const ports = options.ports || {
@@ -168,10 +168,7 @@ const createNginxFile = (targetPath, options) => {
 
 const updateNginxFile = task => {
   const deploy = task.deploy
-  const filename = path.resolve(
-    process.cwd(),
-    `./workspace/products/${deploy.target}/nginx.conf`
-  )
+  const filename = target.nginxProductPath(deploy.target, deploy.region)
 
   return new Promise((resolve, reject) => {
     NginxConfFile.create(filename, (err, conf) => {

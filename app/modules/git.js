@@ -2,15 +2,15 @@
  * @Author: Whzcorcd
  * @Date: 2021-08-06 13:57:14
  * @LastEditors: Whzcorcd
- * @LastEditTime: 2021-11-26 10:13:23
+ * @LastEditTime: 2021-11-26 13:14:36
  * @Description: file content
  */
 'use strict'
 
-const path = require('path')
 const fs = require('fs/promises')
 const queue = require('./queue')
 const loger = require('./loger')
+const { containerPath } = require('./target')
 const { runCmd } = require('./run')
 
 // function clone(repo, targetPath, options) {
@@ -94,8 +94,7 @@ const { runCmd } = require('./run')
 // }
 
 const runInit = async (tasks, parallel = require('os').cpus().length) => {
-  const context = process.cwd()
-  const dirs = await fs.readdir(path.resolve(context, './workspace/containers'))
+  const dirs = await fs.readdir(containerPath)
   const taskSet = [[]]
   let preOrder = 0
 

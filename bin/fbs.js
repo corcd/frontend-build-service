@@ -2,7 +2,7 @@
  * @Author: Whzcorcd
  * @Date: 2021-11-23 16:33:26
  * @LastEditors: Whzcorcd
- * @LastEditTime: 2021-11-26 10:51:35
+ * @LastEditTime: 2021-11-26 11:52:20
  * @Description: file content
  */
 'use strict'
@@ -38,7 +38,7 @@ const config = project => {
   return options
 }
 
-execute(config(program._optionValues.project), target.CONTEXT).catch(errors =>
+execute(config(program._optionValues.project)).catch(errors =>
   process.nextTick(() => {
     loger.error(errors)
     process.exit(1)

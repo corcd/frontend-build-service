@@ -2,7 +2,7 @@
  * @Author: Whzcorcd
  * @Date: 2021-11-22 13:07:42
  * @LastEditors: Whzcorcd
- * @LastEditTime: 2021-11-26 10:14:27
+ * @LastEditTime: 2021-11-26 13:47:59
  * @Description: file content
  */
 'use strict'
@@ -57,10 +57,13 @@ class Program {
 }
 
 class Deploy {
-  constructor({ target, ignore, directory }) {
+  constructor({ target, host, region, ports, ignore, directory }) {
     this.target = target
-    this.ignore = ignore
+    this.host = host
+    this.region = region
+    this.ports = ports
     this.directory = directory
+    this.ignore = ignore
   }
 }
 
