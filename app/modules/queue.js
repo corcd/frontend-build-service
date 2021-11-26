@@ -2,10 +2,12 @@
  * @Author: Whzcorcd
  * @Date: 2021-06-06 17:56:59
  * @LastEditors: Whzcorcd
- * @LastEditTime: 2021-11-24 14:31:00
+ * @LastEditTime: 2021-11-26 10:25:08
  * @Description: file content
  */
 'use strict'
+
+const error = require('./error')
 
 // 串行执行任务
 const serial = tasks => {
@@ -13,10 +15,13 @@ const serial = tasks => {
   const results = []
   const each = task => {
     if (typeof task === 'function') {
-      p = p.then(task).then(result => {
-        results.push(result)
-        return result
-      })
+      p = p
+        .then(task)
+        .then(result => {
+          results.push(result)
+          return result
+        })
+        .catch(() => error.add(task.name))
     } else {
       each(() => task)
     }
@@ -29,11 +34,12 @@ const serial = tasks => {
 const parallel = (tasks, limit = tasks.length) => {
   if (limit === tasks.length) {
     // 不指定 limit 时默认逻辑
-    return Promise.all(
+    return Promise.allSettled(
       tasks.map(task => {
         try {
           return typeof task === 'function' ? task() : task
         } catch (e) {
+          error.add(task.name)
           return Promise.reject(e)
         }
       })

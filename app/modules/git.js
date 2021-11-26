@@ -2,7 +2,7 @@
  * @Author: Whzcorcd
  * @Date: 2021-08-06 13:57:14
  * @LastEditors: Whzcorcd
- * @LastEditTime: 2021-11-25 16:23:39
+ * @LastEditTime: 2021-11-26 10:13:23
  * @Description: file content
  */
 'use strict'
@@ -10,6 +10,7 @@
 const path = require('path')
 const fs = require('fs/promises')
 const queue = require('./queue')
+const loger = require('./loger')
 const { runCmd } = require('./run')
 
 // function clone(repo, targetPath, options) {
@@ -146,7 +147,7 @@ const runInit = async (tasks, parallel = require('os').cpus().length) => {
     })
       .then(() => {
         const timeEnd = Math.round((Date.now() - time) / 1000)
-        console.log('░░', 'ElapsedTime:', `${timeEnd}s`)
+        loger.log('░░', 'ElapsedTime:', `${timeEnd}s`)
       })
       .catch(errors => {
         throw errors
@@ -165,7 +166,7 @@ const runInit = async (tasks, parallel = require('os').cpus().length) => {
     )
       .then(() => {
         const timeEnd = Math.round((Date.now() - time) / 1000)
-        console.log('░░', 'ElapsedTime:', `${timeEnd}s`)
+        loger.log('░░', 'ElapsedTime:', `${timeEnd}s`)
       })
       .catch(errors => {
         throw errors

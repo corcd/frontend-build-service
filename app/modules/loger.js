@@ -2,7 +2,7 @@
  * @Author: Whzcorcd
  * @Date: 2021-11-23 14:11:29
  * @LastEditors: Whzcorcd
- * @LastEditTime: 2021-11-23 14:12:33
+ * @LastEditTime: 2021-11-26 10:12:52
  * @Description: file content
  */
 'use strict'
@@ -15,10 +15,18 @@ const color = Symbol('color')
 const fontWeight = Symbol('fontWeight')
 const fontStyle = Symbol('fontStyle')
 const textDecoration = Symbol('textDecoration')
-const TYPES = { minWidth, maxWidth, width, textAlign, color, fontWeight, fontStyle, textDecoration }
+const TYPES = {
+  minWidth,
+  maxWidth,
+  width,
+  textAlign,
+  color,
+  fontWeight,
+  fontStyle,
+  textDecoration,
+}
 
 class StringStyle {
-
   constructor(string, displayColor = true) {
     this.string = [...string]
     this.displayColor = displayColor
@@ -26,12 +34,14 @@ class StringStyle {
 
   toString() {
     // 注意：对执行顺序有要求
-    Object.keys(TYPES).filter(key => {
-      return this[key] !== undefined
-    }).forEach(key => {
-      const value = this[key]
-      this[TYPES[key]](value)
-    })
+    Object.keys(TYPES)
+      .filter(key => {
+        return this[key] !== undefined
+      })
+      .forEach(key => {
+        const value = this[key]
+        this[TYPES[key]](value)
+      })
 
     return this.string.join('')
   }
@@ -67,7 +77,8 @@ class StringStyle {
       case 'center':
         str = content.trim()
         length = ([...content].length - [...str].length) / 2
-        str = ' '.repeat(Math.trunc(length)) + str + ' '.repeat(Math.ceil(length))
+        str =
+          ' '.repeat(Math.trunc(length)) + str + ' '.repeat(Math.ceil(length))
         this.string = [...str]
         break
       default:
@@ -108,7 +119,6 @@ class StringStyle {
   }
 }
 
-
 StringStyle.colors = {
   white: ['\x1B[37m', '\x1B[39m'],
   gray: ['\x1B[90m', '\x1B[39m'],
@@ -122,15 +132,16 @@ StringStyle.colors = {
   inverse: ['\x1B[7m', '\x1B[27m'], // 特有的反白颜色
 }
 
-
 class Loger {
-
   /**
    * 支持设置样式的日志显示程序
    * @param   {Object[]}  styles          样式配置
    * @param   {boolean}   displayColor    是否显示彩色日志
    */
-  constructor(styles = [], displayColor = process.stdout.isTTY || process.env.LOGER_DISPLAY_COLOR) {
+  constructor(
+    styles = [],
+    displayColor = process.stdout.isTTY || process.env.LOGER_DISPLAY_COLOR
+  ) {
     this.styles = styles
     this.displayColor = displayColor
     this.log = this.log.bind(this)
@@ -159,4 +170,6 @@ class Loger {
   }
 }
 
-module.exports = Loger
+const instance = new Loger()
+
+module.exports = instance

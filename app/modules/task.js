@@ -2,12 +2,13 @@
  * @Author: Whzcorcd
  * @Date: 2021-11-22 13:07:42
  * @LastEditors: Whzcorcd
- * @LastEditTime: 2021-11-25 17:28:14
+ * @LastEditTime: 2021-11-26 10:14:27
  * @Description: file content
  */
 'use strict'
 
 const queue = require('./queue')
+const loger = require('./loger')
 const { runCmd } = require('./run')
 
 class Repository {
@@ -104,7 +105,7 @@ const runTasks = (tasks, parallel = require('os').cpus().length) => {
         )
           .then(() => {
             const timeEnd = Math.round((Date.now() - time) / 1000)
-            console.log('░░', 'ElapsedTime:', `${timeEnd}s`)
+            loger.log('░░', 'ElapsedTime:', `${timeEnd}s`)
           })
           .catch(errors => {
             throw errors
@@ -122,7 +123,7 @@ const runTasks = (tasks, parallel = require('os').cpus().length) => {
         )
           .then(() => {
             const timeEnd = Math.round((Date.now() - time) / 1000)
-            console.log('░░', 'ElapsedTime:', `${timeEnd}s`)
+            loger.log('░░', 'ElapsedTime:', `${timeEnd}s`)
           })
           .catch(errors => {
             throw errors

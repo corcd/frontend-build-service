@@ -2,7 +2,7 @@
  * @Author: Whzcorcd
  * @Date: 2021-11-25 13:38:46
  * @LastEditors: Whzcorcd
- * @LastEditTime: 2021-11-25 18:16:17
+ * @LastEditTime: 2021-11-26 10:14:07
  * @Description: file content
  */
 'use strict'
@@ -11,6 +11,7 @@ const path = require('path')
 const fs = require('fs/promises')
 const rimraf = require('rimraf')
 const queue = require('./queue')
+const loger = require('./loger')
 
 const remove = path => {
   return new Promise((resolve, reject) => {
@@ -68,7 +69,7 @@ const runExtract = async (tasks, parallel = require('os').cpus().length) => {
     return extract(task)
       .then(() => {
         const timeEnd = Math.round((Date.now() - time) / 1000)
-        console.log('░░', 'ElapsedTime:', `${timeEnd}s`)
+        loger.log('░░', 'ElapsedTime:', `${timeEnd}s`)
       })
       .catch(errors => {
         throw errors

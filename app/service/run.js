@@ -2,17 +2,17 @@
  * @Author: Whzcorcd
  * @Date: 2021-11-23 13:54:21
  * @LastEditors: Whzcorcd
- * @LastEditTime: 2021-11-23 16:50:07
+ * @LastEditTime: 2021-11-26 10:56:00
  * @Description: file content
  */
 'use strict'
 
 const Service = require('egg').Service
-const path = require('path')
 const execute = require('../modules/execute')
-const CONTEXT = process.cwd()
+const loger = require('../modules/loger')
+const target = require('../modules/target')
 
-process.env.LOGER_DISPLAY_COLOR = 1
+process.env.LOGER_DISPLAY_COLOR = 5
 
 class RunService extends Service {
   index(project) {
@@ -21,23 +21,25 @@ class RunService extends Service {
         parallel: require('os').cpus.length,
         force: false,
       }
-      const PROJECT = path.resolve(CONTEXT, `./workspace/projects/${project}.json`)
+      const PROJECT = target.targetProjectPath(project)
       try {
         // 尝试加载配置文件
         const projectOptions = require(PROJECT)
         options = Object.assign(options, projectOptions)
-        // TODO: 整合默认配置
+        // TODO: 整合默认配置 & 合法性校验
       } catch (e) {
-        console.error(`configuration not found: "${project}"`)
+        loger.error(`configuration not found: "${project}"`)
         process.exit(1)
       }
       return options
     }
 
-    execute(config(project), CONTEXT).catch(errors => process.nextTick(() => {
-      console.error(errors)
-      process.exit(1)
-    }))
+    execute(config(project), target.CONTEXT).catch(errors =>
+      process.nextTick(() => {
+        loger.error(errors)
+        process.exit(1)
+      })
+    )
   }
 }
 

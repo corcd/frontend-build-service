@@ -75,6 +75,12 @@
   "dependencies": [],
   "program": {},
   "deploy": {
-    "target": "huawei"
+    "target": "huawei",
+    "host": "huaguangyun.cn",
+    "region": "consoles",
+    "ports": {
+      "http": 80,
+      "https": 443
+    }
   }
 }
