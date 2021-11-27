@@ -6,7 +6,7 @@
       "url": "http://wanghanze:whz18267590821@gitlab.aodianyun.com/lcps/Lcps-Scene-Vue3.git",
       "branch": "origin/test"
     },
-    "dependencies": ["@gdyfe/uploader"],
+    "dependencies": [],
     "program": {
       "command": ["pnpm install", "pnpm build:huawei"],
       "options": {
@@ -30,7 +30,7 @@
       "url": "http://wanghanze:whz18267590821@gitlab.aodianyun.com/lcps/Lcps-Delay.git",
       "branch": "origin/test"
     },
-    "dependencies": ["@gdyfe/uploader"],
+    "dependencies": [],
     "program": {
       "command": ["yarn install", "yarn build:huawei"],
       "options": {
@@ -54,7 +54,7 @@
       "url": "http://wanghanze:whz18267590821@gitlab.aodianyun.com/lcps/Lcps-Monitor.git",
       "branch": "origin/test"
     },
-    "dependencies": ["@gdyfe/uploader"],
+    "dependencies": [],
     "program": {
       "command": ["yarn install", "yarn build:huawei"],
       "options": {

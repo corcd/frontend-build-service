@@ -2,7 +2,7 @@
  * @Author: Whzcorcd
  * @Date: 2021-11-23 14:07:32
  * @LastEditors: Whzcorcd
- * @LastEditTime: 2021-11-26 13:55:41
+ * @LastEditTime: 2021-11-28 00:25:47
  * @Description: file content
  */
 'use strict'
@@ -19,6 +19,7 @@ const {
   nginxProductPath,
 } = require('./target')
 const { runInit } = require('./git')
+const replaceDependencies = require('./dependency')
 const { runTasks } = require('./task')
 const { runExtract } = require('./extract')
 const { createNginxFile, runNginx } = require('./nginx')
@@ -54,6 +55,12 @@ const execute = (options = {}) => {
     async tasks => {
       loger.log('Git clone/pull')
       await runInit(tasks, options.parallel)
+      return tasks
+    },
+
+    tasks => {
+      loger.log('Upgrade')
+      tasks.map(task => replaceDependencies(task))
       return tasks
     },
 
