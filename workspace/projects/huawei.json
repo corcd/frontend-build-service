@@ -76,11 +76,13 @@
   "program": {},
   "deploy": {
     "target": "huawei",
+    "version": "1.0.0",
     "host": "huaguangyun.cn",
     "region": "consoles",
     "ports": {
       "http": 80,
       "https": 443
     }
-  }
+  },
+  "increment": ["monitor"]
 }

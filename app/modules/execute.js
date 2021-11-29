@@ -2,7 +2,7 @@
  * @Author: Whzcorcd
  * @Date: 2021-11-23 14:07:32
  * @LastEditors: Whzcorcd
- * @LastEditTime: 2021-11-28 00:25:47
+ * @LastEditTime: 2021-11-29 12:21:11
  * @Description: file content
  */
 'use strict'
@@ -18,6 +18,7 @@ const {
   appProductPath,
   nginxProductPath,
 } = require('./target')
+const incrementalFilter = require('./increment')
 const { runInit } = require('./git')
 const replaceDependencies = require('./dependency')
 const { runTasks } = require('./task')
@@ -58,9 +59,16 @@ const execute = (options = {}) => {
       return tasks
     },
 
+    // 增量筛选器
+    tasks => {
+      loger.log('Filter')
+      return incrementalFilter(tasks, options)
+    },
+
+    // 依赖更新器
     tasks => {
       loger.log('Upgrade')
-      tasks.map(task => replaceDependencies(task))
+      replaceDependencies(tasks)
       return tasks
     },
 
