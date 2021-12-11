@@ -2,7 +2,7 @@
  * @Author: Whzcorcd
  * @Date: 2021-11-25 14:06:54
  * @LastEditors: Whzcorcd
- * @LastEditTime: 2021-11-26 12:57:22
+ * @LastEditTime: 2021-12-11 18:20:29
  * @Description: file content
  */
 'use strict'
@@ -13,7 +13,7 @@ const loger = require('./loger')
 const target = require('./target')
 
 const createNginxFile = (targetPath, options) => {
-  const ports = options.ports || {
+  const ports = options.deploy.ports || {
     http: 80,
     https: 443,
   }

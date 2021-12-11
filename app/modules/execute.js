@@ -2,7 +2,7 @@
  * @Author: Whzcorcd
  * @Date: 2021-11-23 14:07:32
  * @LastEditors: Whzcorcd
- * @LastEditTime: 2021-11-29 12:21:11
+ * @LastEditTime: 2021-12-11 16:54:27
  * @Description: file content
  */
 'use strict'
@@ -66,11 +66,11 @@ const execute = (options = {}) => {
     },
 
     // 依赖更新器
-    tasks => {
-      loger.log('Upgrade')
-      replaceDependencies(tasks)
-      return tasks
-    },
+    // tasks => {
+    //   loger.log('Upgrade')
+    //   replaceDependencies(tasks, options)
+    //   return tasks
+    // },
 
     // 命令执行器
     async tasks => {

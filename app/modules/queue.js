@@ -2,7 +2,7 @@
  * @Author: Whzcorcd
  * @Date: 2021-06-06 17:56:59
  * @LastEditors: Whzcorcd
- * @LastEditTime: 2021-11-26 13:59:47
+ * @LastEditTime: 2021-12-11 18:18:37
  * @Description: file content
  */
 'use strict'
@@ -21,7 +21,7 @@ const serial = tasks => {
           results.push(result)
           return result
         })
-        .catch(() => error.add(task))
+        .catch(e => error.add(task, e))
     } else {
       each(() => task)
     }
@@ -39,7 +39,7 @@ const parallel = (tasks, limit = tasks.length) => {
         try {
           return typeof task === 'function' ? task() : task
         } catch (e) {
-          error.add(task)
+          error.add(task, e)
           return Promise.reject(e)
         }
       })
