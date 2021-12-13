@@ -2,7 +2,7 @@
  * @Author: Whzcorcd
  * @Date: 2021-11-23 14:07:32
  * @LastEditors: Whzcorcd
- * @LastEditTime: 2021-12-11 16:54:27
+ * @LastEditTime: 2021-12-13 09:47:19
  * @Description: file content
  */
 'use strict'
@@ -45,8 +45,12 @@ const execute = (options = {}) => {
       }
 
       const nginxPath = nginxProductPath(deploy.target, deploy.region)
-      await fs.writeFile(nginxPath, '')
-      await createNginxFile(nginxPath, options)
+      try {
+        await fs.access(nginxPath)
+      } catch (e) {
+        await fs.writeFile(nginxPath, '')
+        await createNginxFile(nginxPath, options)
+      }
 
       // 将外部输入的配置转换成内部任务描述队列
       return create(options)

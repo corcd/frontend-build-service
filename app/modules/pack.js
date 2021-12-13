@@ -2,13 +2,13 @@
  * @Author: Whzcorcd
  * @Date: 2021-11-29 12:32:00
  * @LastEditors: Whzcorcd
- * @LastEditTime: 2021-11-29 16:34:13
+ * @LastEditTime: 2021-12-13 09:41:14
  * @Description: file content
  */
 'use strict'
 
 const { runCmd } = require('./run')
-const { regionProductPath } = require('./target')
+const { CONTEXT, regionProductPath } = require('./target')
 const loger = require('./loger')
 const generateDockerfile = require('./dockerfile')
 
@@ -46,7 +46,12 @@ const pack = async options => {
     cwd: regionProductPath(options.deploy.target, options.deploy.region),
     target: 'custom',
   })
-    .then(generatePublishCommand(options))
+    .then(() =>
+      runCmd(generatePublishCommand(options), {
+        cwd: CONTEXT,
+        target: 'custom',
+      })
+    )
     .then(() => {
       const timeEnd = Math.round((Date.now() - time) / 1000)
       loger.log('░░', 'ElapsedTime:', `${timeEnd}s`)

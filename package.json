@@ -1,6 +1,6 @@
 {
   "name": "frontend-build-service",
-  "version": "2.1.0-beta.1",
+  "version": "2.1.2-beta.2",
   "description": "云平台 G 云前端构建服务",
   "private": true,
   "bin": "bin/fbs.js",
@@ -20,7 +20,7 @@
     "autod": "autod"
   },
   "ci": {
-    "version": "10"
+    "version": "14"
   },
   "repository": {
     "type": "git",
@@ -32,8 +32,8 @@
     "declarations": true
   },
   "dependencies": {
+    "@gdyfe/dockerfile-generator": "^4.1.0",
     "compressing": "^1.5.1",
-    "dockerfile-generator": "^4.0.12",
     "egg": "^2.29.1",
     "egg-amqplib": "^2.0.5",
     "egg-cors": "^2.2.3",
@@ -64,6 +64,6 @@
     "eslint-config-egg": "^7.1.0"
   },
   "engines": {
-    "node": ">=10.0.0"
+    "node": ">=14.0.0"
   }
 }

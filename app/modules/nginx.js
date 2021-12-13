@@ -2,7 +2,7 @@
  * @Author: Whzcorcd
  * @Date: 2021-11-25 14:06:54
  * @LastEditors: Whzcorcd
- * @LastEditTime: 2021-12-11 18:20:29
+ * @LastEditTime: 2021-12-12 18:42:26
  * @Description: file content
  */
 'use strict'
@@ -49,7 +49,7 @@ const createNginxFile = (targetPath, options) => {
       conf.nginx.http[0]._add('client_header_buffer_size', '2k')
       conf.nginx.http[0]._add('large_client_header_buffers', '4 4k')
       conf.nginx.http[0]._add('client_max_body_size', '100m')
-      conf.nginx.http[0]._add('access_log', '/var/log/nginx/access.log main')
+      conf.nginx.http[0]._add('access_log', '/var/log/nginx/access.log')
       conf.nginx.http[0]._add('sendfile', 'on')
       conf.nginx.http[0]._add('tcp_nopush', 'on')
       conf.nginx.http[0]._add('tcp_nodelay', 'on')
@@ -76,17 +76,17 @@ const createNginxFile = (targetPath, options) => {
 
       conf.nginx.http[0].server[0]._add(
         'server_name',
-        `${options.region}.${options.host}`
+        `${options.delay.region}.${options.delay.host}`
       )
       conf.nginx.http[0].server[0]._add('root', '/usr/share/nginx/www')
 
       conf.nginx.http[0].server[0]._add(
         'ssl_certificate',
-        `/etc/nginx/ssl/${options.host}/fullchain.pem`
+        `/etc/nginx/ssl/${options.delay.host}/fullchain.pem`
       )
       conf.nginx.http[0].server[0]._add(
         'ssl_certificate_key',
-        `/etc/nginx/ssl/${options.host}/privkey.pem`
+        `/etc/nginx/ssl/${options.delay.host}/privkey.pem`
       )
       conf.nginx.http[0].server[0]._add(
         'ssl_protocols',
@@ -107,12 +107,12 @@ const createNginxFile = (targetPath, options) => {
       )
       conf.nginx.http[0].server[0]._add(
         'add_header',
-        `Set-Cookie "$token_key=$arg_token;path=/;domain=${options.host}"`
+        `Set-Cookie "$token_key=$arg_token;path=/;domain=${options.delay.host}"`
       )
       if (options.region !== 'web') {
         conf.nginx.http[0].server[0]._add(
           'add_header',
-          `Set-Cookie "GDY_CONSOLE_TYPE_KEY=console;path=/;domain=${options.host};expires=31 Dec 1970 23:59:59 GMT"`
+          `Set-Cookie "GDY_CONSOLE_TYPE_KEY=console;path=/;domain=${options.delay.host};expires=31 Dec 1970 23:59:59 GMT"`
         )
         conf.nginx.http[0].server[0]._add(
           'add_header',

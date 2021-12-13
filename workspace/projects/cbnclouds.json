@@ -599,7 +599,7 @@
   },
   "deploy": {
     "target": "cbnclouds",
-    "version": "1.0.0",
+    "version": "2.0.4",
     "host": "cbnclouds.cn",
     "region": "consoles",
     "ports": {
