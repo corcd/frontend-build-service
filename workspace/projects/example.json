@@ -8,7 +8,7 @@
     },
     "dependencies": [],
     "program": {
-      "command": ["pnpm install", "pnpm build:huawei"],
+      "command": ["pnpm install", "pnpm build:dev"],
       "options": {
         "env": {
           "CI_TASK_RUNNER": "1",
@@ -32,7 +32,7 @@
     },
     "dependencies": [],
     "program": {
-      "command": ["yarn install", "yarn build:huawei"],
+      "command": ["yarn install", "yarn build:dev"],
       "options": {
         "env": {
           "CI_TASK_RUNNER": "1",
@@ -56,7 +56,7 @@
     },
     "dependencies": [],
     "program": {
-      "command": ["yarn install", "yarn build:huawei"],
+      "command": ["yarn install", "yarn build:dev"],
       "options": {
         "env": {
           "CI_TASK_RUNNER": "1",
@@ -75,9 +75,9 @@
   "dependencies": [],
   "program": {},
   "deploy": {
-    "target": "huawei",
+    "target": "example",
     "version": "1.0.0",
-    "host": "huaguangyun.cn",
+    "host": "guangdianyun.tv",
     "region": "consoles",
     "ports": {
       "http": 80,
