@@ -134,7 +134,7 @@
     },
     "dependencies": [],
     "program": {
-      "command": ["yarn install", "yarn build:cbnclouds"],
+      "command": ["yarn install", "yarn prebuilt", "yarn build:cbnclouds"],
       "options": {
         "timeout": 0
       }
@@ -599,7 +599,7 @@
   },
   "deploy": {
     "target": "cbnclouds",
-    "version": "2.0.4",
+    "version": "2.0.5",
     "host": "cbnclouds.cn",
     "region": "consoles",
     "ports": {
@@ -607,5 +607,5 @@
       "https": 30443
     }
   },
-  "increment": []
+  "filter": ["make"]
 }

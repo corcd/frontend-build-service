@@ -84,5 +84,5 @@
       "https": 443
     }
   },
-  "increment": ["monitor"]
+  "filter": ["monitor"]
 }

@@ -2,7 +2,7 @@
  * @Author: Whzcorcd
  * @Date: 2021-11-23 14:07:32
  * @LastEditors: Whzcorcd
- * @LastEditTime: 2021-12-13 09:47:19
+ * @LastEditTime: 2021-12-18 21:15:30
  * @Description: file content
  */
 'use strict'
@@ -27,7 +27,7 @@ const { createNginxFile, runNginx } = require('./nginx')
 
 const PACKAGE = require('../../package.json')
 
-const execute = (options = {}) => {
+const execute = (options = {}, filter = '') => {
   const time = Date.now()
 
   loger.log('░░', `${PACKAGE.name}:`, `v${PACKAGE.version}`)
@@ -66,7 +66,7 @@ const execute = (options = {}) => {
     // 增量筛选器
     tasks => {
       loger.log('Filter')
-      return incrementalFilter(tasks, options)
+      return incrementalFilter(tasks, filter ? { filter: [filter] } : options)
     },
 
     // 依赖更新器
