@@ -2,7 +2,7 @@
  * @Author: Whzcorcd
  * @Date: 2021-11-25 13:38:46
  * @LastEditors: Whzcorcd
- * @LastEditTime: 2021-12-23 14:02:30
+ * @LastEditTime: 2021-12-23 14:35:55
  * @Description: file content
  */
 'use strict'
@@ -28,11 +28,9 @@ const remove = path => {
 const create = async path => {
   try {
     await fs.access(path)
-    await remove(path).catch(err => {
-      return Promise.reject(err)
-    })
+    await remove(path)
   } catch (e) {
-    await fs.mkdir(path)
+    await fs.mkdir(path, { recursive: true })
   }
 }
 
@@ -54,35 +52,17 @@ const extract = async task => {
   // ssr 项目不参与主包部署
   if (deploy.ignore) return
 
-  const locationArr = deploy.location.split('/')
   const containerPath = path.resolve(
     targetContainerPath(task.name),
     deploy.directory
   )
 
-  if (isCustomizedLocation) {
-    while (locationArr.length > 0) {
-      const tempPath = path.resolve(
-        appProductPath(deploy.target, deploy.region),
-        `./${locationArr.shift()}`
-      )
-      await create(tempPath)
-      await transfer(
-        containerPath,
-        path.resolve(
-          appProductPath(deploy.target, deploy.region),
-          `./${deploy.location}`
-        )
-      )
-    }
-  } else {
-    const appPath = path.resolve(
-      appProductPath(deploy.target, deploy.region),
-      `./${task.name}`
-    )
-    await create(appPath)
-    await transfer(containerPath, appPath)
-  }
+  const appPath = path.resolve(
+    appProductPath(deploy.target, deploy.region),
+    `./${isCustomizedLocation ? deploy.location : task.name}`
+  )
+  await create(appPath)
+  await transfer(containerPath, appPath)
 
   // try {
   //   await fs.access(appPath)
