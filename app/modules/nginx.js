@@ -2,7 +2,7 @@
  * @Author: Whzcorcd
  * @Date: 2021-11-25 14:06:54
  * @LastEditors: Whzcorcd
- * @LastEditTime: 2021-12-12 18:42:26
+ * @LastEditTime: 2021-12-23 11:32:04
  * @Description: file content
  */
 'use strict'
@@ -182,18 +182,21 @@ const updateNginxFile = task => {
 
       const len = conf.nginx.http[0].server[0].location.length
       const index = conf.nginx.http[0].server[0].location.findIndex(
-        item => item._value === `/${task.name}`
+        item => item._value === `/${task.deploy.location || task.name}`
       )
 
       if (index === -1) {
-        conf.nginx.http[0].server[0]._add('location', `/${task.name}`)
+        conf.nginx.http[0].server[0]._add(
+          'location',
+          `/${task.deploy.location || task.name}`
+        )
         conf.nginx.http[0].server[0].location[len]._add(
           'add_header',
           'Cache-Control "no-cache, no-store"'
         )
         conf.nginx.http[0].server[0].location[len]._add(
           'try_files',
-          `$uri $uri/ /${task.name}/index.html`
+          `$uri $uri/ /${task.deploy.location || task.name}/index.html`
         )
       }
 

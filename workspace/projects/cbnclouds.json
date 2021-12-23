@@ -519,6 +519,7 @@
     },
     "deploy": {
       "ignore": false,
+      "location": "library/media",
       "directory": "./packages/media/dist"
     }
   }, {
@@ -537,6 +538,7 @@
     },
     "deploy": {
       "ignore": false,
+      "location": "library/thirdparty",
       "directory": "./packages/thirdparty/dist"
     }
   }, {
@@ -599,7 +601,7 @@
   },
   "deploy": {
     "target": "cbnclouds",
-    "version": "2.0.5",
+    "version": "2.0.9",
     "host": "cbnclouds.cn",
     "region": "consoles",
     "ports": {
@@ -607,5 +609,5 @@
       "https": 30443
     }
   },
-  "filter": ["make"]
+  "filter": []
 }
