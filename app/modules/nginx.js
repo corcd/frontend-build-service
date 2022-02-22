@@ -2,7 +2,7 @@
  * @Author: Whzcorcd
  * @Date: 2021-11-25 14:06:54
  * @LastEditors: Whzcorcd
- * @LastEditTime: 2021-12-23 11:32:04
+ * @LastEditTime: 2022-02-22 23:39:31
  * @Description: file content
  */
 'use strict'
@@ -76,17 +76,17 @@ const createNginxFile = (targetPath, options) => {
 
       conf.nginx.http[0].server[0]._add(
         'server_name',
-        `${options.delay.region}.${options.delay.host}`
+        `${options.deploy.region}.${options.deploy.host}`
       )
       conf.nginx.http[0].server[0]._add('root', '/usr/share/nginx/www')
 
       conf.nginx.http[0].server[0]._add(
         'ssl_certificate',
-        `/etc/nginx/ssl/${options.delay.host}/fullchain.pem`
+        `/etc/nginx/ssl/${options.deploy.host}/fullchain.pem`
       )
       conf.nginx.http[0].server[0]._add(
         'ssl_certificate_key',
-        `/etc/nginx/ssl/${options.delay.host}/privkey.pem`
+        `/etc/nginx/ssl/${options.deploy.host}/privkey.pem`
       )
       conf.nginx.http[0].server[0]._add(
         'ssl_protocols',
@@ -107,12 +107,12 @@ const createNginxFile = (targetPath, options) => {
       )
       conf.nginx.http[0].server[0]._add(
         'add_header',
-        `Set-Cookie "$token_key=$arg_token;path=/;domain=${options.delay.host}"`
+        `Set-Cookie "$token_key=$arg_token;path=/;domain=${options.deploy.host}"`
       )
       if (options.region !== 'web') {
         conf.nginx.http[0].server[0]._add(
           'add_header',
-          `Set-Cookie "GDY_CONSOLE_TYPE_KEY=console;path=/;domain=${options.delay.host};expires=31 Dec 1970 23:59:59 GMT"`
+          `Set-Cookie "GDY_CONSOLE_TYPE_KEY=console;path=/;domain=${options.deploy.host};expires=31 Dec 1970 23:59:59 GMT"`
         )
         conf.nginx.http[0].server[0]._add(
           'add_header',

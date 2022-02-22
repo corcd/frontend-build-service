@@ -2,7 +2,7 @@
  * @Author: Whzcorcd
  * @Date: 2020-08-10 11:35:45
  * @LastEditors: Whzcorcd
- * @LastEditTime: 2021-12-13 10:57:31
+ * @LastEditTime: 2022-02-22 23:40:33
  * @Description: file content
 -->
 
@@ -23,24 +23,26 @@ yarn install
 #### build
 
 ```shell
-node bin/fbs.js --project <project> --pack
+node bin/fbs.js build --project <name> --filter <task> --pack
 ```
 
 参数：
 
-- `--project <project>` 对应项目
+- `--project <name>` 对应项目
+
+- `--filter <task>` 按需构建
 
 - `--pack` 构建完成后自动执行打包
 
 #### pack
 
 ```shell
-node bin/fbs.js pack <project>
+node bin/fbs.js pack <name>
 ```
 
 参数：
 
-- `<project>` 对应项目
+- `<name>` 对应项目
 
 ### Use Webhooks
 
