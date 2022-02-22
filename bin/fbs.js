@@ -2,7 +2,7 @@
  * @Author: Whzcorcd
  * @Date: 2021-11-23 16:33:26
  * @LastEditors: Whzcorcd
- * @LastEditTime: 2021-12-18 21:08:35
+ * @LastEditTime: 2022-02-22 23:28:32
  * @Description: file content
  */
 'use strict'
@@ -44,7 +44,7 @@ program
   .option('--filter <task>', 'the filtered task name')
   .option('--pack', 'pack the project')
   .action(async params => {
-    await execute(config(params.project), params.task).catch(errors =>
+    await execute(config(params.project), params.filter).catch(errors =>
       process.nextTick(() => {
         loger.error(errors)
         process.exit(1)
