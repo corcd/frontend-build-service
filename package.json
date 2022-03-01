@@ -1,6 +1,6 @@
 {
   "name": "frontend-build-service",
-  "version": "2.1.2-beta.3",
+  "version": "2.1.4-beta.3",
   "description": "云平台 G 云前端构建服务",
   "private": true,
   "bin": "bin/fbs.js",

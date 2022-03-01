@@ -2,7 +2,7 @@
  * @Author: Whzcorcd
  * @Date: 2021-11-25 14:06:54
  * @LastEditors: Whzcorcd
- * @LastEditTime: 2022-02-22 23:39:31
+ * @LastEditTime: 2022-03-01 10:06:35
  * @Description: file content
  */
 'use strict'
@@ -182,22 +182,41 @@ const updateNginxFile = task => {
 
       const len = conf.nginx.http[0].server[0].location.length
       const index = conf.nginx.http[0].server[0].location.findIndex(
-        item => item._value === `/${task.deploy.location || task.name}`
+        item => item._value === `/${deploy.location || task.name}`
       )
 
       if (index === -1) {
         conf.nginx.http[0].server[0]._add(
           'location',
-          `/${task.deploy.location || task.name}`
+          `/${deploy.location || task.name}`
         )
-        conf.nginx.http[0].server[0].location[len]._add(
-          'add_header',
-          'Cache-Control "no-cache, no-store"'
-        )
-        conf.nginx.http[0].server[0].location[len]._add(
-          'try_files',
-          `$uri $uri/ /${task.deploy.location || task.name}/index.html`
-        )
+        if (deploy.ssr) {
+          conf.nginx.http[0].server[0].location[len]._add(
+            'add_header',
+            'Vary "Accept-Encoding, User-Agent"'
+          )
+          conf.nginx.http[0].server[0].location[len]._add(
+            'proxy_http_version',
+            '1.1'
+          )
+          conf.nginx.http[0].server[0].location[len]._add(
+            'proxy_pass',
+            `http://172.18.0.1:${deploy.service.port || 3000}`
+          )
+          conf.nginx.http[0].server[0].location[len]._add(
+            'index',
+            'index.html index.htm'
+          )
+        } else {
+          conf.nginx.http[0].server[0].location[len]._add(
+            'add_header',
+            'Cache-Control "no-cache, no-store"'
+          )
+          conf.nginx.http[0].server[0].location[len]._add(
+            'try_files',
+            `$uri $uri/ /${task.deploy.location || task.name}/index.html`
+          )
+        }
       }
 
       conf.flush()
