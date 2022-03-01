@@ -2,7 +2,7 @@
  * @Author: Whzcorcd
  * @Date: 2021-11-25 14:06:54
  * @LastEditors: Whzcorcd
- * @LastEditTime: 2022-03-01 15:19:51
+ * @LastEditTime: 2022-03-01 16:17:44
  * @Description: file content
  */
 'use strict'
@@ -151,7 +151,7 @@ const createNginxFile = (targetPath, options) => {
         '/usr/share/nginx/www/txt'
       )
 
-      if (options.region !== 'web') {
+      if (options.deploy.region !== 'web') {
         conf.nginx.http[0].server[0]._add('location', '/')
         conf.nginx.http[0].server[0].location[2]._add(
           'add_header',

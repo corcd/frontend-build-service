@@ -2,7 +2,7 @@
  * @Author: Whzcorcd
  * @Date: 2021-11-23 14:07:32
  * @LastEditors: Whzcorcd
- * @LastEditTime: 2021-12-18 21:15:30
+ * @LastEditTime: 2022-03-01 16:38:46
  * @Description: file content
  */
 'use strict'
@@ -39,9 +39,9 @@ const execute = (options = {}, filter = '') => {
       try {
         await fs.access(targetProductPath(deploy.target))
       } catch (e) {
-        await fs.mkdir(targetProductPath(deploy.target))
-        await fs.mkdir(regionProductPath(deploy.target, deploy.region))
-        await fs.mkdir(appProductPath(deploy.target, deploy.region))
+        await fs.mkdir(targetProductPath(deploy.target), { recursive: true })
+        await fs.mkdir(regionProductPath(deploy.target, deploy.region), { recursive: true })
+        await fs.mkdir(appProductPath(deploy.target, deploy.region), { recursive: true })
       }
 
       const nginxPath = nginxProductPath(deploy.target, deploy.region)
