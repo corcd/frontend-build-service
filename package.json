@@ -1,6 +1,6 @@
 {
   "name": "frontend-build-service",
-  "version": "2.1.5-beta.3",
+  "version": "2.2.4",
   "description": "云平台 G 云前端构建服务",
   "private": true,
   "bin": "bin/fbs.js",
@@ -24,7 +24,7 @@
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/corcd/frontend-build-service"
   },
   "author": "whzcorcd",
   "license": "MIT",
@@ -43,6 +43,7 @@
     "egg-validate": "^2.0.2",
     "fs-extra": "^9.0.1",
     "github-webhook-handler": "^1.0.0",
+    "jsonfile": "^6.1.0",
     "lodash": "^4.17.21",
     "nginx-conf": "^2.0.0",
     "nginx-config-parser": "^0.1.1",

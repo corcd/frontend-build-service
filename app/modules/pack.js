@@ -2,17 +2,18 @@
  * @Author: Whzcorcd
  * @Date: 2021-11-29 12:32:00
  * @LastEditors: Whzcorcd
- * @LastEditTime: 2021-12-13 09:41:14
+ * @LastEditTime: 2022-03-26 23:33:07
  * @Description: file content
  */
 'use strict'
 
 const { runCmd } = require('./run')
 const { CONTEXT, regionProductPath } = require('./target')
+const { updateVersion } = require('./version')
 const loger = require('./loger')
 const generateDockerfile = require('./dockerfile')
 
-const pack = async options => {
+const pack = async (options, project, release = 'patch') => {
   const time = Date.now()
 
   const generatePackCommand = options => {
@@ -40,6 +41,7 @@ const pack = async options => {
     return args
   }
 
+  await updateVersion(options, project, release)
   await generateDockerfile(options)
 
   return runCmd(generatePackCommand(options), {
